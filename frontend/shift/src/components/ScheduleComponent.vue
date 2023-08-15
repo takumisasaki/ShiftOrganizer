@@ -47,9 +47,8 @@ export default {
     },
     weeks() {
       let weeks = [];
-      let date = new Date();
-      let firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-      let lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+      let firstDayOfMonth = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+      let lastDayOfMonth = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
       let currentDay = firstDayOfMonth;
 
       // 最初の週を処理
