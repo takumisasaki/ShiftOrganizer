@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
     <h1>Login画面です</h1>
+    <i class="fas fa-angle-left fa-5x"></i>
+
   </div>
 </template>
 
