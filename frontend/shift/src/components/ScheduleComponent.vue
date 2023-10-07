@@ -70,8 +70,9 @@ export default {
     ScheduleComponent
   },
   mounted() {
-    for(let i = 0; i < 24; i++) {
+    for(let i = 0; i <= 24; i++) {
         let hour = i.toString().padStart(2, '0');
+        this.timesArray.push("24:00");
         this.timesArray.push(hour + ":00");
         this.timesArray.push(hour + ":30");
       }
@@ -204,10 +205,6 @@ th, td {
   th, td {
     padding: 7px; /* セルのパディングを少し減らす */
   }
-}
-
-.day-dialog-mask {
-  position: fixed;
 }
 
 .dialog {

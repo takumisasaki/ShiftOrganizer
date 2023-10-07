@@ -1,19 +1,22 @@
 <template>
   <div>
     <HomeComponent class="header"></HomeComponent>
-    <router-link to="/login">Login</router-link><br>
-    <router-link to="/schedule">スケジュール</router-link>
+    <!-- <router-link to="/login">Login</router-link><br> -->
+    <!-- <router-link to="/schedule">スケジュール</router-link> -->
     <router-view/>
+    <ScheduleComponent></ScheduleComponent>
   </div>
 </template>
 
 <script>
-import HomeComponent from './components/HomeComponent.vue'
+import HomeComponent from './components/HomeComponent'
+import ScheduleComponent from './components/ScheduleComponent'
 
 export default {
   name: 'App',
   components: {
     HomeComponent,
+    ScheduleComponent
   }
 }
 
