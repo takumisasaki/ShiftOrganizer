@@ -1,8 +1,8 @@
 <template>
   <div>
     <header>
+      <MenuBar @toggle-menu="showMenu = !showMenu" />
         <router-link to="/"><h1>小泉シフト管理アプリ</h1></router-link><br>
-        <MenuBar @toggle-menu="showMenu = !showMenu" />
           <div v-if="showMenu" class="menu dialog-mask">
             <div class="menu dialog-content">
               <button @click="closeMenu" class="list-str">閉じる</button>
@@ -43,6 +43,11 @@ methods:{
 </script>
 
 <style>
+header {
+    display: flex;
+
+    align-items: center;
+}
 .dialog-mask {
     position: fixed;
     top: 0;
