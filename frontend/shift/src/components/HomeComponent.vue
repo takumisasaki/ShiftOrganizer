@@ -2,7 +2,7 @@
   <div>
     <header>
       <MenuBar @toggle-menu="showMenu = !showMenu" />
-        <router-link to="/"><h1>小泉シフト管理アプリ</h1></router-link><br>
+        <!-- <router-link to="/"><h1>小泉シフト管理アプリ</h1></router-link><br> -->
           <div v-if="showMenu" class="menu dialog-mask">
             <div class="menu dialog-content">
               <button @click="closeMenu" class="list-str">閉じる</button>

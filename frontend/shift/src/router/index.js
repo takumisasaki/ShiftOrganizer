@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 // import HomeComponent from '@/components/HomeComponent.vue'
 import LoginComponent from '@/components/LoginComponent.vue'
-import ScheduleComponent from '@/components/ScheduleComponent.vue'
+import CalendarScheduleComponent from '@/components/CalendarScheduleComponent.vue'
 // import App from '@/App.vue'
 
 const routes = [
 //   { path: '/', component: App },
   { path: '/login', component: LoginComponent },
-  { path: '/schedule', component: ScheduleComponent },
+  { path: '/schedule', component: CalendarScheduleComponent },
 ]
 
 const router = createRouter({
