@@ -3,20 +3,21 @@
     <HomeComponent class="header"></HomeComponent>
     <!-- <router-link to="/login">Login</router-link><br> -->
     <!-- <router-link to="/schedule">スケジュール</router-link> -->
-    <router-view/>
-    <ScheduleComponent></ScheduleComponent>
+    <!-- <router-view/> -->
+    <br>
+    <CalendarScheduleComponent></CalendarScheduleComponent>
   </div>
 </template>
 
 <script>
 import HomeComponent from './components/HomeComponent'
-import ScheduleComponent from './components/ScheduleComponent'
+import CalendarScheduleComponent from './components/CalendarScheduleComponent'
 
 export default {
   name: 'App',
   components: {
     HomeComponent,
-    ScheduleComponent
+    CalendarScheduleComponent
   }
 }
 

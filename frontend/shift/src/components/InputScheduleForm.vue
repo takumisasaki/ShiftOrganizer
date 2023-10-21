@@ -2,8 +2,13 @@
   <form @submit.prevent="sendData">
     <div class="day-dialog-mask"></div>
     <div class="dialog">
-      {{ currentYear }}年{{ currentMonth + 1 }}月
-      <h3>予定を入力してください: {{ selectedDay }}日</h3>
+      <div v-if="submittedSchedule">
+        <button v-for="(sche, index) in submittedSchedule" :key="index">
+          {{ sche.fields.start_time }} ~ {{ sche.fields.end_time }}
+        </button>
+      </div>
+      <h3>{{ currentYear }}年{{ currentMonth + 1 }}月{{ selectedDay }}日</h3>
+      <!-- <h3>予定を入力してください: {{ selectedDay }}日</h3> -->
       <div class="time-container">
       <select v-model="selectedStartTime" name="start-time">
         <option class="start-time" value="" disabled>開始時刻</option>
@@ -11,6 +16,8 @@
           {{ time }}
         </option>
       </select>
+      <span v-if="isInvalidStartTime" class="error-message">開始時刻は必須です。</span>
+
       <span class="time-separator">〜</span>
       <select v-model="selectedEndTime" name="end-time">
         <option class="start-time" value="" disabled>終了時刻</option>
@@ -18,11 +25,12 @@
           {{ time }}
         </option>
       </select>
+      <span v-if="isInvalidEndTime" class="error-message">終了時刻は必須です。</span>
     </div>
       <!-- <input v-model="schedule" name="scheduleValue" /> -->
       <div class="button-group">
         <button class="close-button" @click="closed">キャンセル</button>
-        <button class="save-button" type="submit">保存</button>
+        <button  :disabled="validate()" class="save-button" type="submit">保存</button>
       </div>
     </div>
   </form>
@@ -37,6 +45,10 @@ export default {
     showDialog: {
       type: Boolean,
       required: true,
+    },
+    submittedSchedule:{
+      type: Array,
+      required: false
     },
     selectedDay: {
       type: Number,
@@ -57,27 +69,33 @@ export default {
     endTime:{
         type:String,
         required: false
+    },
+    closeDialog:{
+      type: Function,
+      required: false
     }
   },
   data() {
     return {
       timesArray: [],
+      isInvalidStartTime: false,
+      isInvalidEndTime: false,
     };
   },
   mounted() {
     for (let i = 0; i <= 24; i++) {
       let hour = i.toString().padStart(2, "0");
-      this.timesArray.push(hour + ":00");
-      this.timesArray.push(hour + ":30");
-    //   if(i == 24){
-    //     this.timesArray.push("24:00");
-    //   }else {
-    //     this.timesArray.push(hour + ":00");
-    //     this.timesArray.push(hour + ":30");
-    //   }
+    //   this.timesArray.push(hour + ":00");
+    //   this.timesArray.push(hour + ":30");
+      if(i == 24){
+        this.timesArray.push("24:00");
+      }else {
+        this.timesArray.push(hour + ":00");
+        this.timesArray.push(hour + ":30");
+      }
     }
   },
-  setup(props) {
+  setup(props, context) {
     const schedule = ref("");
     const selectedStartTime = ref("");
     const selectedEndTime = ref("");
@@ -119,6 +137,7 @@ export default {
         .post("http://127.0.0.1:8000/api/data", formData)
         .then((response) => {
           console.log("response_data", response.data);
+          context.emit('close-dialog');
         })
         .catch((error) => {
           console.log("errorが発生しました。", error);
@@ -134,6 +153,10 @@ export default {
     };
   },
   methods: {
+    validate(){
+      if(!this.selectedStartTime) return true
+      if(!this.selectedEndTime) return true
+    },
     closed() {
       this.$emit("close-dialog");
     },
@@ -227,7 +250,8 @@ button {
     margin: 5px 5px;
     padding: 8px 10px;
     box-sizing: border-box;
-    width: 48px; 
+    width: 48px;
+    font-size: 14px; 
 }
 
 .close-button{
@@ -238,6 +262,12 @@ button {
 .save-button {
     background-color: #007bff;
     color: #fff;
+}
+
+.save-button:disabled {
+  background-color: #ccc; /* グレー背景 */
+  color: #888; /* グレーテキスト */
+  cursor: not-allowed; /* 禁止マークのカーソル */
 }
 
 /* button:hover {
@@ -261,5 +291,11 @@ select:focus {
 
 .start-time {
   color: #b3b3b3;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-left: 10px;
 }
 </style>
